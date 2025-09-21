@@ -34,5 +34,8 @@ app.use((err, _req, res, _next) => {
   console.error(err);
   res.status(err.status || 500).json({ message: err.message || 'Server error' });
 });
+app.get('/', (req, res) => {
+  res.send('Backend is running!');
+});
 
 export default app;
