@@ -3,6 +3,7 @@ What's New Blog Platform
 A full-stack blog publishing platform built with a modern stack for creating, reading, updating, and deleting blog posts.
 
 You can check webiste live on render: https://blogapp1-1-5g13.onrender.com
+
 **Tech Stack**
 
 Frontend: React, Redux Toolkit, React Router, SCSS (Vite)
@@ -12,6 +13,7 @@ Backend: Node.js, Express, MongoDB (Mongoose), JWT Authentication
 OAuth: Firebase Authentication (in progress)
 
 **Project Structure**
+
 MittArv/
 ├── backend/        # Express + MongoDB + JWT/Firebase auth
 └── frontend/       # React + Redux Toolkit + Vite
@@ -27,6 +29,7 @@ MittArv/
 ->Extras: Search by title/tags, Likes/Bookmarks, Reactions, Comments, Pagination-ready API.
 
 **Quickstart**
+
 1️⃣ Database Setup
 
 Create a MongoDB database (Atlas or local).
@@ -34,6 +37,7 @@ Create a MongoDB database (Atlas or local).
 Copy your connection string.
 
 2️⃣ Backend Setup
+
 cd backend
 npm install
 cp .env.example .env
