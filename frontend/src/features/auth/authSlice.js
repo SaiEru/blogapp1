@@ -1,29 +1,39 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { api } from '../../services/api.js';
 
+// Load saved user/token from localStorage
 const savedUser = JSON.parse(localStorage.getItem('user') || 'null');
 const savedToken = localStorage.getItem('token');
 
-export const login = createAsyncThunk('auth/login', async (payload, { rejectWithValue }) => {
-  try {
-    const { data } = await api.post('/auth/login', payload);
-    return data;
-  } catch (err) {
-    return rejectWithValue(err.response?.data || { message: 'Login failed' });
+// Login async thunk
+export const login = createAsyncThunk(
+  'auth/login',
+  async (payload, { rejectWithValue }) => {
+    try {
+      const { data } = await api.post('/auth/login', payload);
+      return data;
+    } catch (err) {
+      console.log('Login error:', err.response?.data);
+      return rejectWithValue(err.response?.data || { message: 'Login failed' });
+    }
   }
-});
+);
 
-export const register = createAsyncThunk('auth/register', async (payload, { rejectWithValue }) => {
-  try {
-    const { data } = await api.post('/auth/register', payload);
-    return data;
-  } catch (err) {
-    return rejectWithValue(err.response?.data || { message: 'Registration failed' });
+// Register async thunk
+export const register = createAsyncThunk(
+  'auth/register',
+  async (payload, { rejectWithValue }) => {
+    try {
+      const { data } = await api.post('/auth/register', payload);
+      return data;
+    } catch (err) {
+      console.log('Register error:', err.response?.data);
+      return rejectWithValue(err.response?.data || { message: 'Registration failed' });
+    }
   }
-});
+);
 
-// Firebase login removed
-
+// Redux slice
 const slice = createSlice({
   name: 'auth',
   initialState: { user: savedUser, token: savedToken, status: 'idle', error: null },
@@ -31,6 +41,8 @@ const slice = createSlice({
     logout(state) {
       state.user = null;
       state.token = null;
+      state.status = 'idle';
+      state.error = null;
       localStorage.removeItem('user');
       localStorage.removeItem('token');
     },
@@ -43,6 +55,7 @@ const slice = createSlice({
   },
   extraReducers: (builder) => {
     builder
+      // Login cases
       .addCase(login.pending, (s) => {
         s.status = 'loading';
         s.error = null;
@@ -54,10 +67,12 @@ const slice = createSlice({
         localStorage.setItem('user', JSON.stringify(payload.user));
         localStorage.setItem('token', payload.token);
       })
-      .addCase(login.rejected, (s, { payload }) => {
+      .addCase(login.rejected, (s, { payload, error }) => {
         s.status = 'failed';
-        s.error = payload?.message || 'Login failed';
+        s.error = payload?.message || payload || error?.message || 'Login failed';
       })
+
+      // Register cases
       .addCase(register.pending, (s) => {
         s.status = 'loading';
         s.error = null;
@@ -69,9 +84,9 @@ const slice = createSlice({
         localStorage.setItem('user', JSON.stringify(payload.user));
         localStorage.setItem('token', payload.token);
       })
-      .addCase(register.rejected, (s, { payload }) => {
+      .addCase(register.rejected, (s, { payload, error }) => {
         s.status = 'failed';
-        s.error = payload?.message || 'Registration failed';
+        s.error = payload?.message || payload || error?.message || 'Registration failed';
       });
   },
 });
