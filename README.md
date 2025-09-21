@@ -36,7 +36,7 @@ Copy your connection string.
 cd backend
 npm install
 cp .env.example .env
-# Edit .env with your MongoDB URI + JWT_SECRET
+**Edit .env with your MongoDB URI + JWT_SECRET**
 npm run dev
 
 3️⃣ Frontend Setup
