@@ -1,7 +1,7 @@
 What's New Blog Platform
 
 A full-stack blog publishing platform built with a modern stack for creating, reading, updating, and deleting blog posts.
-
+You can check webiste live on render:): https://blogapp1-1-5g13.onrender.com
 **Tech Stack**
 
 Frontend: React, Redux Toolkit, React Router, SCSS (Vite)
