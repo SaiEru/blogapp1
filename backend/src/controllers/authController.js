@@ -1,12 +1,12 @@
 import jwt from 'jsonwebtoken';
 import { validationResult } from 'express-validator';
 import User from '../models/User.js';
-import { firebaseAuth } from '../utils/firebase.js';
+import { firebaseAuth } from '../utils/firebase.js'; // in progress
 
 function signToken(userId) {
   return jwt.sign({ id: userId }, process.env.JWT_SECRET, { expiresIn: '7d' });
 }
-
+//register controller
 export const register = async (req, res) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) return res.status(400).json({ errors: errors.array() });
@@ -24,7 +24,7 @@ export const register = async (req, res) => {
     res.status(500).json({ message: err.message });
   }
 };
-
+//login controller
 export const login = async (req, res) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) return res.status(400).json({ errors: errors.array() });
